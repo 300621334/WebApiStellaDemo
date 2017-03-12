@@ -8,7 +8,7 @@ namespace SurveyDemo.Models
     public class SurveyReturned
     {
         public int uuid { get; set; }
-        public string rating { get; set; }
+        public int rating { get; set; }
         public string reward { get; set; }
     }
 }

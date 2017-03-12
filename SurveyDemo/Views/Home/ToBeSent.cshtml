@@ -53,7 +53,7 @@
             @Html.DisplayFor(modelItem => item.surveySent)
         </td>
         <td>
-            @Html.ActionLink("Send Survey", "Create", new {custID=item.custID })
+            @Html.ActionLink("Send Survey", "Create", new {contactID=item.contactID })
             @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@

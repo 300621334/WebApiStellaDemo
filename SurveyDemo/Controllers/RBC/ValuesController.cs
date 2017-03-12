@@ -4,15 +4,17 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SurveyDemo.Models;
 
 namespace SurveyDemo.Controllers
 {
     public class ValuesController : ApiController
     {
         // POST api/values
-        public IHttpActionResult Post([FromBody]string value)
+        public IHttpActionResult Post(SurveyReturned surveyReturned)
         {
-            return Ok(value);
+            //save values from surveyReturned into DB usng Ef & DbSet
+            return Ok("RBC successfully saved JSON");
         }
 
         // GET api/values

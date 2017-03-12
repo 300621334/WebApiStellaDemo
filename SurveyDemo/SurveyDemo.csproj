@@ -113,7 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Stella\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -158,6 +157,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Interaction.cs" />
+    <Compile Include="Models\SendInfo.cs" />
     <Compile Include="Models\SurveyReturned.cs" />
     <Compile Include="Models\SurveySent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,6 +214,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\ToBeSent.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Stella\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

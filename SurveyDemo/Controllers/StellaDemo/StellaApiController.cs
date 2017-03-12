@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SurveyDemo.Models;
+using Newtonsoft.Json;//JsonConvert... need NuGet package
 
 namespace SurveyDemo.Controllers.StellaDemo
 {
@@ -12,9 +14,12 @@ namespace SurveyDemo.Controllers.StellaDemo
 
 
         // POST api/stella
-        public IHttpActionResult Post([FromBody]string value)
+        public IHttpActionResult Post(Customer customer)
         {
-            return Ok(value);
+            //Guid g;
+            //string g = Guid.NewGuid().ToString().Substring(0, 8);
+
+            return Ok(customer);
         }
 
 
@@ -28,7 +33,7 @@ namespace SurveyDemo.Controllers.StellaDemo
         //}
         //============================http://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c ... https://msdn.microsoft.com/en-us/library/system.guid.newguid(v=vs.110).aspx
         //Guid g;
-        string g = Guid.NewGuid().ToString().Substring(0, 8);
+        //string g = Guid.NewGuid().ToString().Substring(0, 8);
 
     }
 }

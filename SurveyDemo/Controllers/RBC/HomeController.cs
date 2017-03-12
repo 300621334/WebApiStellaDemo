@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SurveyDemo.Models;
 using System.Net.Http;//for HttpClient
+using Newtonsoft.Json;//JsonConvert
 
 namespace SurveyDemo.Controllers
 {
@@ -40,9 +41,11 @@ namespace SurveyDemo.Controllers
             return View(toBeSent);
         }
 
-        public ActionResult Create(int custID)//when "Send Survey" btn clicked, a GET request is send. (bcoz it's just a hyperling, NOT a submit btn on any FORM)
+        //create an Edit form so agent can verify detail of customer
+        public ActionResult Create(int contactID)//when "Send Survey" btn clicked, a GET request is send. (bcoz it's just a hyperling, NOT a submit btn on any FORM)
         {
-            var customer = customers.Where(s => s.custID == custID).FirstOrDefault(); //replace e EF context.DbSetName.Where(...)
+            var interact = interactions.Where(s => s.contactID == contactID).FirstOrDefault();
+            var customer = customers.Where(s => s.custID == interact.custID).FirstOrDefault(); //replace e EF context.DbSetName.Where(...)
             return View(customer);
         }
 
@@ -51,26 +54,27 @@ namespace SurveyDemo.Controllers
         {
             using(HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:55911/api/values");  //this 2nd POST doesn't come from browser, rather internally ein webServer. So browser does NOT show it. Only later RedirectToAction("ToBeSent"); is displayed as a POST call to http://localhost:55911 e HTML in response body
+                client.BaseAddress = new Uri("http://localhost:55911/api/StellaApi");  //this 2nd POST doesn't come from browser, rather internally ein webServer. So browser does NOT show it. Only later RedirectToAction("ToBeSent"); is displayed as a POST call to http://localhost:55911 e HTML in response body
 
                 //var postTask = client.PostAsJsonAsync<Customer>("values", customer);
-                var postTask = client.PostAsJsonAsync<string>("values", "success yeah!");
+                var postTask = client.PostAsJsonAsync<Customer>("StellaApi", customer);// empty str also works ("", customer);
                 postTask.Wait();
 
                 var response = postTask.Result;
                 if(response.IsSuccessStatusCode)
                 {
-                    var x = response.Content.ReadAsAsync<string>();//this does NOT return a string, rather a Task
+                    var x = response.Content.ReadAsAsync<Customer>();//this does NOT return a string, rather a Task
                     x.Wait();//wait for TASK to complete
-                    string y = x.Result;//Task returns a string
-                    return y;
+                    Customer y =  x.Result;//Task returns a string
+                    string z = JsonConvert.SerializeObject(y);
+                    return z;//in real life, save uuid to database here via EF context & DbSet
 
                     //return RedirectToAction("ToBeSent");//here a POST call made to ToBeSent() shown in browser as "http://localhost:55911" only 
                     //this "return" will exit Create() so remaining code never exe
                 }
             }
             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-            return View(customer).ToString();
+            return View().ToString();
         }
     }
 }
