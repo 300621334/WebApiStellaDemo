@@ -12,21 +12,21 @@ namespace SurveyDemo.Controllers
     public class HomeController : Controller
     {
         #region Replace this with DB
-        List<Interaction> interactions = new List<Interaction> { 
-             new Interaction(){contactID=1, channel="phone", country="Canada", custID=1, empID=1, surveySent=0}
-            ,new Interaction(){contactID=2, channel="phone", country="Canada", custID=2, empID=2, surveySent=1}
-            ,new Interaction(){contactID=3, channel="phone", country="Canada", custID=3, empID=3, surveySent=0}
-        };
-        List<Customer> customers = new List<Customer> { 
-             new Customer(){ custID=1, name="Mani", email="abc@xyz.com"}
-            ,new Customer(){ custID=2, name="John", email="def@xyz.com"}
-            ,new Customer(){ custID=3, name="Paul", email="ghi@xyz.com"}
-        };
-        List<Employee> employees = new List<Employee> { 
-             new Employee(){ empID=1, name="aaa", email="123@xyz.com"}
-            ,new Employee(){ empID=2, name="bbb", email="456@xyz.com"}
-            ,new Employee(){ empID=3, name="ccc", email="789@xyz.com"}
-        };
+        //List<Interaction> interactions = new List<Interaction> { 
+        //     new Interaction(){contactID=1, channel="phone", country="Canada", custID=1, empID=1, surveySent=0}
+        //    ,new Interaction(){contactID=2, channel="phone", country="Canada", custID=2, empID=2, surveySent=1}
+        //    ,new Interaction(){contactID=3, channel="phone", country="Canada", custID=3, empID=3, surveySent=0}
+        //};
+        //List<Customer> customers = new List<Customer> { 
+        //     new Customer(){ custID=1, name="Mani", email="abc@xyz.com"}
+        //    ,new Customer(){ custID=2, name="John", email="def@xyz.com"}
+        //    ,new Customer(){ custID=3, name="Paul", email="ghi@xyz.com"}
+        //};
+        //List<Employee> employees = new List<Employee> { 
+        //     new Employee(){ empID=1, name="aaa", email="123@xyz.com"}
+        //    ,new Employee(){ empID=2, name="bbb", email="456@xyz.com"}
+        //    ,new Employee(){ empID=3, name="ccc", email="789@xyz.com"}
+        //};
         #endregion
 
 
@@ -37,16 +37,23 @@ namespace SurveyDemo.Controllers
 
         public ActionResult ToBeSent() //browser repeatedly made some requests; to stop add  this to webConfig "<add key="vs:EnableBrowserLink" value="false" />" : http://stackoverflow.com/questions/19917595/net-localhost-website-consistently-making-get-arterysignalr-polltransport-long
         {
-            var toBeSent = interactions.Where(s => s.surveySent == 0);
-            return View(toBeSent);
+            IList<Interact> toBeSent = null;
+            using (SurveyEntities ctx = new SurveyEntities())
+            {
+                toBeSent = ctx.Interacts.Where(s => s.uuid == null).ToList<Interact>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
+                
+                return View(toBeSent);
+            }   
+            //var toBeSent = interactions.Where(s => s.surveySent == 0);
+            //return View(toBeSent);
         }
 
         //create an Edit form so agent can verify detail of customer
         public ActionResult Create(int contactID)//when "Send Survey" btn clicked, a GET request is send. (bcoz it's just a hyperling, NOT a submit btn on any FORM)
         {
-            var interact = interactions.Where(s => s.contactID == contactID).FirstOrDefault();
-            var customer = customers.Where(s => s.custID == interact.custID).FirstOrDefault(); //replace e EF context.DbSetName.Where(...)
-            return View(customer);
+            //var interact = interactions.Where(s => s.contactID == contactID).FirstOrDefault();
+            //var customer = customers.Where(s => s.custID == interact.custID).FirstOrDefault(); //replace e EF context.DbSetName.Where(...)
+            return View();
         }
 
         [HttpPost] //when "Submit/Send" btn clicked on EDIT-view. Since it is a FROM, a POST rqst sent along e values from ALL controls/input-fields. That data binds to Customer object

@@ -159,7 +159,7 @@
     <Compile Include="Controllers\RBC\ValuesController.cs" />
     <Compile Include="Controllers\StellaDemo\StellaApiController.cs" />
     <Compile Include="Controllers\StellaDemo\StellaController.cs" />
-    <Compile Include="Customers.cs">
+    <Compile Include="Customer.cs">
       <DependentUpon>EF_Survey.tt</DependentUpon>
     </Compile>
     <Compile Include="EF_Survey.Context.cs">
@@ -177,13 +177,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EF_Survey.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Employees.cs">
+    <Compile Include="Employee.cs">
       <DependentUpon>EF_Survey.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Interacts.cs">
+    <Compile Include="Interact.cs">
       <DependentUpon>EF_Survey.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer.cs" />
@@ -233,13 +233,16 @@
     </EntityDeploy>
     <Content Include="EF_Survey.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EF_Survey.edmx</DependentUpon>
       <LastGenOutput>EF_Survey.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EF_Survey.edmx.diagram">
       <DependentUpon>EF_Survey.edmx</DependentUpon>
     </Content>
     <Content Include="EF_Survey.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EF_Survey.cs</LastGenOutput>
       <DependentUpon>EF_Survey.edmx</DependentUpon>
+      <LastGenOutput>EF_Survey.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

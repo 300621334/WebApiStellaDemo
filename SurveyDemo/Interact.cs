@@ -12,10 +12,11 @@ namespace SurveyDemo
     using System;
     using System.Collections.Generic;
     
-    public partial class SurveysIn
+    public partial class Interact
     {
-        public int uuid { get; set; }
-        public string Reward { get; set; }
-        public string Rating { get; set; }
+        public int interactId { get; set; }
+        public Nullable<int> uuid { get; set; }
+        public int Customer_custId { get; set; }
+        public int Employee_empId { get; set; }
     }
 }

@@ -4,230 +4,154 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EF_Survey.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="EF_SurveyStoreContainer">
-    <EntitySet Name="Customers" EntityType="EF_Survey.Store.Customers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Employees" EntityType="EF_Survey.Store.Employees" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Interacts" EntityType="EF_Survey.Store.Interacts" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SurveysIn" EntityType="EF_Survey.Store.SurveysIn" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="CustomersInteracts" Association="EF_Survey.Store.CustomersInteracts">
-      <End Role="Customers" EntitySet="Customers" />
-      <End Role="Interacts" EntitySet="Interacts" />
-    </AssociationSet>
-    <AssociationSet Name="InteractsEmployees" Association="EF_Survey.Store.InteractsEmployees">
-      <End Role="Interacts" EntitySet="Interacts" />
-      <End Role="Employees" EntitySet="Employees" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Customers">
-    <Key>
-      <PropertyRef Name="custId" />
-    </Key>
-    <Property Name="custId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Employees">
-    <Key>
-      <PropertyRef Name="empId" />
-    </Key>
-    <Property Name="empId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Interacts">
-    <Key>
-      <PropertyRef Name="interactId" />
-    </Key>
-    <Property Name="interactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="custId" Type="int" Nullable="false" />
-    <Property Name="empId" Type="int" Nullable="false" />
-    <Property Name="uuid" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Customer_custId" Type="int" Nullable="false" />
-    <Property Name="Employee_empId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="SurveysIn">
-    <Key>
-      <PropertyRef Name="uuid" />
-    </Key>
-    <Property Name="uuid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Reward" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Rating" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <Association Name="CustomersInteracts">
-    <End Role="Customers" Type="EF_Survey.Store.Customers" Multiplicity="1" />
-    <End Role="Interacts" Type="EF_Survey.Store.Interacts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customers">
-        <PropertyRef Name="custId" />
-      </Principal>
-      <Dependent Role="Interacts">
-        <PropertyRef Name="Customer_custId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="InteractsEmployees">
-    <End Role="Interacts" Type="EF_Survey.Store.Interacts" Multiplicity="*" />
-    <End Role="Employees" Type="EF_Survey.Store.Employees" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Employees">
-        <PropertyRef Name="empId" />
-      </Principal>
-      <Dependent Role="Interacts">
-        <PropertyRef Name="Employee_empId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EF_Survey" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
-        <EntityContainer Name="EF_SurveyContainer1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Customers" EntityType="EF_Survey.Customers" />
-          <EntitySet Name="Employees" EntityType="EF_Survey.Employees" />
-          <EntitySet Name="Interacts" EntityType="EF_Survey.Interacts" />
-          <EntitySet Name="SurveysIn" EntityType="EF_Survey.SurveysIn" />
-          <AssociationSet Name="CustomersInteracts" Association="EF_Survey.CustomersInteracts">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Interacts" EntitySet="Interacts" />
-          </AssociationSet>
-          <AssociationSet Name="InteractsEmployees" Association="EF_Survey.InteractsEmployees">
-            <End Role="Interacts" EntitySet="Interacts" />
-            <End Role="Employees" EntitySet="Employees" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="SurveyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="custId" />
           </Key>
-          <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" />
-          <NavigationProperty Name="Interact" Relationship="EF_Survey.CustomersInteracts" FromRole="Customers" ToRole="Interacts" />
+          <Property Name="custId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="empId" />
           </Key>
-          <Property Name="empId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" />
-          <NavigationProperty Name="Interact" Relationship="EF_Survey.InteractsEmployees" FromRole="Employees" ToRole="Interacts" />
+          <Property Name="empId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Interacts">
           <Key>
             <PropertyRef Name="interactId" />
           </Key>
-          <Property Name="interactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="custId" Type="Int32" Nullable="false" />
-          <Property Name="empId" Type="Int32" Nullable="false" />
-          <Property Name="uuid" Type="String" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="EF_Survey.CustomersInteracts" FromRole="Interacts" ToRole="Customers" />
-          <NavigationProperty Name="Employee" Relationship="EF_Survey.InteractsEmployees" FromRole="Interacts" ToRole="Employees" />
+          <Property Name="interactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uuid" Type="int" />
+          <Property Name="Customer_custId" Type="int" Nullable="false" />
+          <Property Name="Employee_empId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SurveysIn">
           <Key>
             <PropertyRef Name="uuid" />
           </Key>
-          <Property Name="uuid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Reward" Type="String" Nullable="false" />
-          <Property Name="Rating" Type="String" Nullable="false" />
+          <Property Name="uuid" Type="int" Nullable="false" />
+          <Property Name="Reward" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Rating" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <Association Name="CustomersInteracts">
-          <End Type="EF_Survey.Customers" Role="Customers" Multiplicity="1" />
-          <End Type="EF_Survey.Interacts" Role="Interacts" Multiplicity="0..1" />
-        </Association>
-        <Association Name="InteractsEmployees">
-          <End Type="EF_Survey.Interacts" Role="Interacts" Multiplicity="0..1" />
-          <End Type="EF_Survey.Employees" Role="Employees" Multiplicity="1" />
-        </Association>
+        <EntityContainer Name="SurveyModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Interacts" EntityType="Self.Interacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveysIn" EntityType="Self.SurveysIn" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SurveyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="custId" />
+          </Key>
+          <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="empId" />
+          </Key>
+          <Property Name="empId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Interact">
+          <Key>
+            <PropertyRef Name="interactId" />
+          </Key>
+          <Property Name="interactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uuid" Type="Int32" />
+          <Property Name="Customer_custId" Type="Int32" Nullable="false" />
+          <Property Name="Employee_empId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SurveysIn">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="Int32" Nullable="false" />
+          <Property Name="Reward" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rating" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="SurveyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Interacts" EntityType="Self.Interact" />
+          <EntitySet Name="SurveysIns" EntityType="Self.SurveysIn" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EF_SurveyStoreContainer" CdmEntityContainer="EF_SurveyContainer1">
-    <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="IsTypeOf(EF_Survey.Customers)">
-        <MappingFragment StoreEntitySet="Customers">
-          <ScalarProperty Name="custId" ColumnName="custId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Employees">
-      <EntityTypeMapping TypeName="IsTypeOf(EF_Survey.Employees)">
-        <MappingFragment StoreEntitySet="Employees">
-          <ScalarProperty Name="empId" ColumnName="empId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Interacts">
-      <EntityTypeMapping TypeName="IsTypeOf(EF_Survey.Interacts)">
-        <MappingFragment StoreEntitySet="Interacts">
-          <ScalarProperty Name="interactId" ColumnName="interactId" />
-          <ScalarProperty Name="custId" ColumnName="custId" />
-          <ScalarProperty Name="empId" ColumnName="empId" />
-          <ScalarProperty Name="uuid" ColumnName="uuid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SurveysIn">
-      <EntityTypeMapping TypeName="IsTypeOf(EF_Survey.SurveysIn)">
-        <MappingFragment StoreEntitySet="SurveysIn">
-          <ScalarProperty Name="uuid" ColumnName="uuid" />
-          <ScalarProperty Name="Reward" ColumnName="Reward" />
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="CustomersInteracts" TypeName="EF_Survey.CustomersInteracts" StoreEntitySet="Interacts">
-      <EndProperty Name="Customers">
-        <ScalarProperty Name="custId" ColumnName="Customer_custId" />
-      </EndProperty>
-      <EndProperty Name="Interacts">
-        <ScalarProperty Name="interactId" ColumnName="interactId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="InteractsEmployees" TypeName="EF_Survey.InteractsEmployees" StoreEntitySet="Interacts">
-      <EndProperty Name="Employees">
-        <ScalarProperty Name="empId" ColumnName="Employee_empId" />
-      </EndProperty>
-      <EndProperty Name="Interacts">
-        <ScalarProperty Name="interactId" ColumnName="interactId" />
-      </EndProperty>
-    </AssociationSetMapping>
-  </EntityContainerMapping>
-</Mapping></edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SurveyModelStoreContainer" CdmEntityContainer="SurveyEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="SurveyModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="custId" ColumnName="custId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="SurveyModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="empId" ColumnName="empId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Interacts">
+            <EntityTypeMapping TypeName="SurveyModel.Interact">
+              <MappingFragment StoreEntitySet="Interacts">
+                <ScalarProperty Name="interactId" ColumnName="interactId" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="Customer_custId" ColumnName="Customer_custId" />
+                <ScalarProperty Name="Employee_empId" ColumnName="Employee_empId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveysIns">
+            <EntityTypeMapping TypeName="SurveyModel.SurveysIn">
+              <MappingFragment StoreEntitySet="SurveysIn">
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="Reward" ColumnName="Reward" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
-    <edmx:Connection>
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
-    </edmx:Connection>
-    <edmx:Options>
+    </Connection>
+    <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
-    </edmx:Options>
+    </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <edmx:Diagrams>
-      <Diagram DiagramId="f2cd19d51dd9471ea62b6f0f82bb249c" Name="Diagram1">
-        <EntityTypeShape EntityType="EF_Survey.Customers" Width="1.5" PointX="1" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EF_Survey.Employees" Width="1.5" PointX="5.75" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EF_Survey.Interacts" Width="1.5" PointX="3.375" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EF_Survey.SurveysIn" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
-        <AssociationConnector Association="EF_Survey.CustomersInteracts" />
-        <AssociationConnector Association="EF_Survey.InteractsEmployees" />
-      </Diagram>
-    </edmx:Diagrams>
-  </edmx:Designer>
+    <Diagrams></Diagrams>
+  </Designer>
 </edmx:Edmx>
