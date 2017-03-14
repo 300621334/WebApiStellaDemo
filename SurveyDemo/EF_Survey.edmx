@@ -9,7 +9,6 @@
     <EntitySet Name="Customers" EntityType="EF_Survey.Store.Customers" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Employees" EntityType="EF_Survey.Store.Employees" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Interacts" EntityType="EF_Survey.Store.Interacts" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SurveysOut" EntityType="EF_Survey.Store.SurveysOut" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SurveysIn" EntityType="EF_Survey.Store.SurveysIn" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CustomersInteracts" Association="EF_Survey.Store.CustomersInteracts">
       <End Role="Customers" EntitySet="Customers" />
@@ -18,14 +17,6 @@
     <AssociationSet Name="InteractsEmployees" Association="EF_Survey.Store.InteractsEmployees">
       <End Role="Interacts" EntitySet="Interacts" />
       <End Role="Employees" EntitySet="Employees" />
-    </AssociationSet>
-    <AssociationSet Name="InteractsSurveysOut" Association="EF_Survey.Store.InteractsSurveysOut">
-      <End Role="Interacts" EntitySet="Interacts" />
-      <End Role="SurveysOut" EntitySet="SurveysOut" />
-    </AssociationSet>
-    <AssociationSet Name="SurveysOutSurveysIn" Association="EF_Survey.Store.SurveysOutSurveysIn">
-      <End Role="SurveysOut" EntitySet="SurveysOut" />
-      <End Role="SurveysIn" EntitySet="SurveysIn" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Customers">
@@ -49,22 +40,19 @@
       <PropertyRef Name="interactId" />
     </Key>
     <Property Name="interactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Customers_custId" Type="int" Nullable="false" />
-    <Property Name="Employees_empId" Type="int" Nullable="false" />
-    <Property Name="SurveysOut_uuid" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="SurveysOut">
-    <Key>
-      <PropertyRef Name="uuid" />
-    </Key>
-    <Property Name="uuid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SurveysIn_uuid" Type="int" Nullable="false" />
+    <Property Name="custId" Type="int" Nullable="false" />
+    <Property Name="empId" Type="int" Nullable="false" />
+    <Property Name="uuid" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Customer_custId" Type="int" Nullable="false" />
+    <Property Name="Employee_empId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SurveysIn">
     <Key>
       <PropertyRef Name="uuid" />
     </Key>
     <Property Name="uuid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Reward" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Rating" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="CustomersInteracts">
     <End Role="Customers" Type="EF_Survey.Store.Customers" Multiplicity="1" />
@@ -74,7 +62,7 @@
         <PropertyRef Name="custId" />
       </Principal>
       <Dependent Role="Interacts">
-        <PropertyRef Name="Customers_custId" />
+        <PropertyRef Name="Customer_custId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -86,31 +74,7 @@
         <PropertyRef Name="empId" />
       </Principal>
       <Dependent Role="Interacts">
-        <PropertyRef Name="Employees_empId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="InteractsSurveysOut">
-    <End Role="Interacts" Type="EF_Survey.Store.Interacts" Multiplicity="*" />
-    <End Role="SurveysOut" Type="EF_Survey.Store.SurveysOut" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="SurveysOut">
-        <PropertyRef Name="uuid" />
-      </Principal>
-      <Dependent Role="Interacts">
-        <PropertyRef Name="SurveysOut_uuid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SurveysOutSurveysIn">
-    <End Role="SurveysOut" Type="EF_Survey.Store.SurveysOut" Multiplicity="*" />
-    <End Role="SurveysIn" Type="EF_Survey.Store.SurveysIn" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="SurveysIn">
-        <PropertyRef Name="uuid" />
-      </Principal>
-      <Dependent Role="SurveysOut">
-        <PropertyRef Name="SurveysIn_uuid" />
+        <PropertyRef Name="Employee_empId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -122,7 +86,6 @@
           <EntitySet Name="Customers" EntityType="EF_Survey.Customers" />
           <EntitySet Name="Employees" EntityType="EF_Survey.Employees" />
           <EntitySet Name="Interacts" EntityType="EF_Survey.Interacts" />
-          <EntitySet Name="SurveysOut" EntityType="EF_Survey.SurveysOut" />
           <EntitySet Name="SurveysIn" EntityType="EF_Survey.SurveysIn" />
           <AssociationSet Name="CustomersInteracts" Association="EF_Survey.CustomersInteracts">
             <End Role="Customers" EntitySet="Customers" />
@@ -132,14 +95,6 @@
             <End Role="Interacts" EntitySet="Interacts" />
             <End Role="Employees" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="InteractsSurveysOut" Association="EF_Survey.InteractsSurveysOut">
-            <End Role="Interacts" EntitySet="Interacts" />
-            <End Role="SurveysOut" EntitySet="SurveysOut" />
-          </AssociationSet>
-          <AssociationSet Name="SurveysOutSurveysIn" Association="EF_Survey.SurveysOutSurveysIn">
-            <End Role="SurveysOut" EntitySet="SurveysOut" />
-            <End Role="SurveysIn" EntitySet="SurveysIn" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customers">
           <Key>
@@ -148,7 +103,7 @@
           <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Email" Type="String" Nullable="false" />
-          <NavigationProperty Name="Interacts" Relationship="EF_Survey.CustomersInteracts" FromRole="Customers" ToRole="Interacts" />
+          <NavigationProperty Name="Interact" Relationship="EF_Survey.CustomersInteracts" FromRole="Customers" ToRole="Interacts" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -157,65 +112,34 @@
           <Property Name="empId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Email" Type="String" Nullable="false" />
-          <NavigationProperty Name="Interacts" Relationship="EF_Survey.InteractsEmployees" FromRole="Employees" ToRole="Interacts" />
+          <NavigationProperty Name="Interact" Relationship="EF_Survey.InteractsEmployees" FromRole="Employees" ToRole="Interacts" />
         </EntityType>
         <EntityType Name="Interacts">
           <Key>
             <PropertyRef Name="interactId" />
           </Key>
           <Property Name="interactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="custId" Type="Int32" Nullable="false" />
+          <Property Name="empId" Type="Int32" Nullable="false" />
+          <Property Name="uuid" Type="String" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="EF_Survey.CustomersInteracts" FromRole="Interacts" ToRole="Customers" />
-          <Property Name="Customers_custId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="EF_Survey.InteractsEmployees" FromRole="Interacts" ToRole="Employees" />
-          <Property Name="Employees_empId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SurveysOut" Relationship="EF_Survey.InteractsSurveysOut" FromRole="Interacts" ToRole="SurveysOut" />
-        </EntityType>
-        <EntityType Name="SurveysOut">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Name="uuid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Interact" Relationship="EF_Survey.InteractsSurveysOut" FromRole="SurveysOut" ToRole="Interacts" />
-          <NavigationProperty Name="SurveysIn" Relationship="EF_Survey.SurveysOutSurveysIn" FromRole="SurveysOut" ToRole="SurveysIn" />
         </EntityType>
         <EntityType Name="SurveysIn">
           <Key>
             <PropertyRef Name="uuid" />
           </Key>
           <Property Name="uuid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="SurveysOut" Relationship="EF_Survey.SurveysOutSurveysIn" FromRole="SurveysIn" ToRole="SurveysOut" />
+          <Property Name="Reward" Type="String" Nullable="false" />
+          <Property Name="Rating" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="CustomersInteracts">
           <End Type="EF_Survey.Customers" Role="Customers" Multiplicity="1" />
-          <End Type="EF_Survey.Interacts" Role="Interacts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="custId" />
-            </Principal>
-            <Dependent Role="Interacts">
-              <PropertyRef Name="Customers_custId" />
-            </Dependent>
-          </ReferentialConstraint>
+          <End Type="EF_Survey.Interacts" Role="Interacts" Multiplicity="0..1" />
         </Association>
         <Association Name="InteractsEmployees">
-          <End Type="EF_Survey.Interacts" Role="Interacts" Multiplicity="*" />
+          <End Type="EF_Survey.Interacts" Role="Interacts" Multiplicity="0..1" />
           <End Type="EF_Survey.Employees" Role="Employees" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="empId" />
-            </Principal>
-            <Dependent Role="Interacts">
-              <PropertyRef Name="Employees_empId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="InteractsSurveysOut">
-          <End Type="EF_Survey.Interacts" Role="Interacts" Multiplicity="1" />
-          <End Type="EF_Survey.SurveysOut" Role="SurveysOut" Multiplicity="1" />
-        </Association>
-        <Association Name="SurveysOutSurveysIn">
-          <End Type="EF_Survey.SurveysOut" Role="SurveysOut" Multiplicity="1" />
-          <End Type="EF_Survey.SurveysIn" Role="SurveysIn" Multiplicity="1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -245,14 +169,8 @@
       <EntityTypeMapping TypeName="IsTypeOf(EF_Survey.Interacts)">
         <MappingFragment StoreEntitySet="Interacts">
           <ScalarProperty Name="interactId" ColumnName="interactId" />
-          <ScalarProperty Name="Customers_custId" ColumnName="Customers_custId" />
-          <ScalarProperty Name="Employees_empId" ColumnName="Employees_empId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SurveysOut">
-      <EntityTypeMapping TypeName="IsTypeOf(EF_Survey.SurveysOut)">
-        <MappingFragment StoreEntitySet="SurveysOut">
+          <ScalarProperty Name="custId" ColumnName="custId" />
+          <ScalarProperty Name="empId" ColumnName="empId" />
           <ScalarProperty Name="uuid" ColumnName="uuid" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -261,23 +179,25 @@
       <EntityTypeMapping TypeName="IsTypeOf(EF_Survey.SurveysIn)">
         <MappingFragment StoreEntitySet="SurveysIn">
           <ScalarProperty Name="uuid" ColumnName="uuid" />
+          <ScalarProperty Name="Reward" ColumnName="Reward" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="InteractsSurveysOut" TypeName="EF_Survey.InteractsSurveysOut" StoreEntitySet="Interacts">
-      <EndProperty Name="SurveysOut">
-        <ScalarProperty Name="uuid" ColumnName="SurveysOut_uuid" />
+    <AssociationSetMapping Name="CustomersInteracts" TypeName="EF_Survey.CustomersInteracts" StoreEntitySet="Interacts">
+      <EndProperty Name="Customers">
+        <ScalarProperty Name="custId" ColumnName="Customer_custId" />
       </EndProperty>
       <EndProperty Name="Interacts">
         <ScalarProperty Name="interactId" ColumnName="interactId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="SurveysOutSurveysIn" TypeName="EF_Survey.SurveysOutSurveysIn" StoreEntitySet="SurveysOut">
-      <EndProperty Name="SurveysIn">
-        <ScalarProperty Name="uuid" ColumnName="SurveysIn_uuid" />
+    <AssociationSetMapping Name="InteractsEmployees" TypeName="EF_Survey.InteractsEmployees" StoreEntitySet="Interacts">
+      <EndProperty Name="Employees">
+        <ScalarProperty Name="empId" ColumnName="Employee_empId" />
       </EndProperty>
-      <EndProperty Name="SurveysOut">
-        <ScalarProperty Name="uuid" ColumnName="uuid" />
+      <EndProperty Name="Interacts">
+        <ScalarProperty Name="interactId" ColumnName="interactId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
@@ -301,15 +221,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f2cd19d51dd9471ea62b6f0f82bb249c" Name="Diagram1">
-        <EntityTypeShape EntityType="EF_Survey.Customers" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EF_Survey.Employees" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="EF_Survey.Interacts" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="EF_Survey.SurveysOut" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EF_Survey.SurveysIn" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
-        <AssociationConnector Association="EF_Survey.CustomersInteracts" ManuallyRouted="false" />
-        <AssociationConnector Association="EF_Survey.InteractsEmployees" ManuallyRouted="false" />
-        <AssociationConnector Association="EF_Survey.InteractsSurveysOut" ManuallyRouted="false" />
-        <AssociationConnector Association="EF_Survey.SurveysOutSurveysIn" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EF_Survey.Customers" Width="1.5" PointX="1" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EF_Survey.Employees" Width="1.5" PointX="5.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EF_Survey.Interacts" Width="1.5" PointX="3.375" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EF_Survey.SurveysIn" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="EF_Survey.CustomersInteracts" />
+        <AssociationConnector Association="EF_Survey.InteractsEmployees" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

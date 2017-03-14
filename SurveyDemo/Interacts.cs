@@ -15,11 +15,11 @@ namespace SurveyDemo
     public partial class Interacts
     {
         public int interactId { get; set; }
-        public int Customers_custId { get; set; }
-        public int Employees_empId { get; set; }
+        public int custId { get; set; }
+        public int empId { get; set; }
+        public string uuid { get; set; }
     
         public virtual Customers Customer { get; set; }
         public virtual Employees Employee { get; set; }
-        public virtual SurveysOut SurveysOut { get; set; }
     }
 }

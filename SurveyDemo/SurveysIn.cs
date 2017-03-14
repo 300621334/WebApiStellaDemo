@@ -15,7 +15,7 @@ namespace SurveyDemo
     public partial class SurveysIn
     {
         public int uuid { get; set; }
-    
-        public virtual SurveysOut SurveysOut { get; set; }
+        public string Reward { get; set; }
+        public string Rating { get; set; }
     }
 }

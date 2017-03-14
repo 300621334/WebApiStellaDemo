@@ -160,16 +160,31 @@
     <Compile Include="Controllers\StellaDemo\StellaApiController.cs" />
     <Compile Include="Controllers\StellaDemo\StellaController.cs" />
     <Compile Include="Customers.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
+      <DependentUpon>EF_Survey.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF_Survey.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EF_Survey.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF_Survey.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EF_Survey.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF_Survey.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EF_Survey.edmx</DependentUpon>
     </Compile>
     <Compile Include="Employees.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
+      <DependentUpon>EF_Survey.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interacts.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
+      <DependentUpon>EF_Survey.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -178,21 +193,8 @@
     <Compile Include="Models\SurveyReturned.cs" />
     <Compile Include="Models\SurveySent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Survey.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Survey.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Survey.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Survey.tt</DependentUpon>
-    </Compile>
     <Compile Include="SurveysIn.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SurveysOut.cs">
-      <DependentUpon>Survey.tt</DependentUpon>
+      <DependentUpon>EF_Survey.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +231,16 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EF_Survey.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="EF_Survey.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EF_Survey.Context.cs</LastGenOutput>
+      <DependentUpon>EF_Survey.edmx</DependentUpon>
+    </Content>
+    <Content Include="EF_Survey.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EF_Survey.cs</LastGenOutput>
+      <DependentUpon>EF_Survey.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -254,16 +266,6 @@
     <Content Include="Views\Home\ToBeSent.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Stella\Index.cshtml" />
-    <Content Include="Survey.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Survey.Context.cs</LastGenOutput>
-      <DependentUpon>EF_Survey.edmx</DependentUpon>
-    </Content>
-    <Content Include="Survey.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Survey.cs</LastGenOutput>
-      <DependentUpon>EF_Survey.edmx</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

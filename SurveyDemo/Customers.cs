@@ -14,15 +14,10 @@ namespace SurveyDemo
     
     public partial class Customers
     {
-        public Customers()
-        {
-            this.Interacts = new HashSet<Interacts>();
-        }
-    
         public int custId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
     
-        public virtual ICollection<Interacts> Interacts { get; set; }
+        public virtual Interacts Interact { get; set; }
     }
 }
