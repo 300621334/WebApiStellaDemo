@@ -66,7 +66,7 @@ namespace SurveyDemo.Controllers
                     var x = response.Content.ReadAsAsync<Customer>();//this does NOT return a string, rather a Task
                     x.Wait();//wait for TASK to complete
                     Customer y =  x.Result;//Task returns a string
-                    string z = JsonConvert.SerializeObject(y);
+                    string z = JsonConvert.SerializeObject(y);//can serial a List of multiple objs too //http://www.newtonsoft.com/json/help/html/SerializingCollections.htm
                     return z;//in real life, save uuid to database here via EF context & DbSet
 
                     //return RedirectToAction("ToBeSent");//here a POST call made to ToBeSent() shown in browser as "http://localhost:55911" only 
