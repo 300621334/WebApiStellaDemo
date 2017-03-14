@@ -37,10 +37,20 @@ namespace SurveyDemo.Controllers
 
         public ActionResult ToBeSent() //browser repeatedly made some requests; to stop add  this to webConfig "<add key="vs:EnableBrowserLink" value="false" />" : http://stackoverflow.com/questions/19917595/net-localhost-website-consistently-making-get-arterysignalr-polltransport-long
         {
-            IList<Interact> toBeSent = null;
+            IList<InteractView> toBeSent = null;
             using (SurveyEntities ctx = new SurveyEntities())
             {
-                toBeSent = ctx.Interacts.Where(s => s.uuid == null).ToList<Interact>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
+                
+                //toBeSent = ctx.Interacts.Where(s => s.uuid == null).ToList<Interact>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
+                toBeSent = ctx.Interacts.Where(i => i.uuid == null).Select(i=> new InteractView()
+                {
+                Customer = ctx.Customers.Where(c=>c.custId == i.Customer_custId).Select(c=>c.Name).FirstOrDefault(),
+                Agent = ctx.Employees.Where(e=>e.empId==i.Employee_empId).Select(e=>e.Name).FirstOrDefault(),
+                 InteractId = i.interactId,
+                  surveySent = i.uuid==null?0:1,
+                   uuid = i.uuid==null?"N/A":i.uuid.ToString()
+                }).ToList<InteractView>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
+                
                 
                 return View(toBeSent);
             }   
@@ -49,30 +59,41 @@ namespace SurveyDemo.Controllers
         }
 
         //create an Edit form so agent can verify detail of customer
-        public ActionResult Create(int contactID)//when "Send Survey" btn clicked, a GET request is send. (bcoz it's just a hyperling, NOT a submit btn on any FORM)
+        public ActionResult Create(int contactID )//when "Send Survey" btn clicked, a GET request is send. (bcoz it's just a hyperling, NOT a submit btn on any FORM)
         {
             //var interact = interactions.Where(s => s.contactID == contactID).FirstOrDefault();
             //var customer = customers.Where(s => s.custID == interact.custID).FirstOrDefault(); //replace e EF context.DbSetName.Where(...)
-            return View();
+            CustView c = null;
+            using (SurveyEntities ctx = new SurveyEntities())
+            {
+                int x  = ctx.Interacts.Where(s=>s.interactId==contactID).Select(s=>s.Customer_custId).FirstOrDefault();
+                c= ctx.Customers.Where(s => s.custId == x).Select(s => new CustView
+                {
+                    custID = s.custId,
+                    name = s.Name,
+                    email = s.Email
+                }).FirstOrDefault();
+            }
+            return View(c);
         }
 
         [HttpPost] //when "Submit/Send" btn clicked on EDIT-view. Since it is a FROM, a POST rqst sent along e values from ALL controls/input-fields. That data binds to Customer object
-        public string Create(Customer customer)
+        public string Create(CustView customer)
         {
             using(HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:55911/api/StellaApi");  //this 2nd POST doesn't come from browser, rather internally ein webServer. So browser does NOT show it. Only later RedirectToAction("ToBeSent"); is displayed as a POST call to http://localhost:55911 e HTML in response body
 
                 //var postTask = client.PostAsJsonAsync<Customer>("values", customer);
-                var postTask = client.PostAsJsonAsync<Customer>("StellaApi", customer);// empty str also works ("", customer);
+                var postTask = client.PostAsJsonAsync<CustView>("StellaApi", customer);// empty str also works ("", customer);
                 postTask.Wait();
 
                 var response = postTask.Result;
                 if(response.IsSuccessStatusCode)
                 {
-                    var x = response.Content.ReadAsAsync<Customer>();//this does NOT return a string, rather a Task
+                    var x = response.Content.ReadAsAsync<CustView>();//this does NOT return a string, rather a Task
                     x.Wait();//wait for TASK to complete
-                    Customer y =  x.Result;//Task returns a string
+                    CustView y = x.Result;//Task returns a string
                     string z = JsonConvert.SerializeObject(y);//can serial a List of multiple objs too //http://www.newtonsoft.com/json/help/html/SerializingCollections.htm
                     return z;//in real life, save uuid to database here via EF context & DbSet
 

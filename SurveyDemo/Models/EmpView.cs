@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SurveyDemo.Models
 {
-    public class Employee
+    public class EmpView
     {
         public int empID { get; set; }
         public string name { get; set; }

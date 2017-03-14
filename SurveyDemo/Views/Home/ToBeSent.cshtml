@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SurveyDemo.Interact>
+﻿@model IEnumerable<SurveyDemo.Models.InteractView>
 
 @{
     ViewBag.Title = "ToBeSent";
@@ -12,13 +12,19 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.InteractId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Agent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.surveySent)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.uuid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Customer_custId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Employee_empId)
         </th>
         <th></th>
     </tr>
@@ -26,20 +32,25 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.InteractId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Agent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.surveySent)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.uuid)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Customer_custId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee_empId)
-        </td>
-        <td>
-            @Html.ActionLink("Send Survey", "Create", new { contactID = item.interactId })
-
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.interactId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.interactId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.interactId })*@
+            @Html.ActionLink("Send Survey", "Create", new { contactID = item.InteractId })
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
         </td>
     </tr>
 }

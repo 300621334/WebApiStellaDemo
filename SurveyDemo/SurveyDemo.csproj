@@ -186,9 +186,9 @@
     <Compile Include="Interact.cs">
       <DependentUpon>EF_Survey.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\Interaction.cs" />
+    <Compile Include="Models\CustView.cs" />
+    <Compile Include="Models\EmpView.cs" />
+    <Compile Include="Models\InteractView.cs" />
     <Compile Include="Models\SendInfo.cs" />
     <Compile Include="Models\SurveyReturned.cs" />
     <Compile Include="Models\SurveySent.cs" />
