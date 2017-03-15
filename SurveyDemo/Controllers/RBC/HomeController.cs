@@ -47,7 +47,7 @@ namespace SurveyDemo.Controllers
                 Customer = ctx.Customers.Where(c=>c.custId == i.Customer_custId).Select(c=>c.Name).FirstOrDefault(),
                 Agent = ctx.Employees.Where(e=>e.empId==i.Employee_empId).Select(e=>e.Name).FirstOrDefault(),
                  InteractId = i.interactId,
-                  surveySent = i.uuid==null?0:1,
+                  surveySent = i.uuid==null?"No":"Yes",
                    uuid = i.uuid==null?"N/A":i.uuid.ToString()
                 }).ToList<InteractView>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
                 
@@ -58,8 +58,7 @@ namespace SurveyDemo.Controllers
             //return View(toBeSent);
         }
 
-        //create an Edit form so agent can verify detail of customer
-        public ActionResult Create(int contactID )//when "Send Survey" btn clicked, a GET request is send. (bcoz it's just a hyperling, NOT a submit btn on any FORM)
+        public ActionResult Create(int contactID)//create an Edit form so agent can verify detail of customer//when "Send Survey" btn clicked, a GET request is send. (bcoz it's just a hyperling, NOT a submit btn on any FORM)
         {
             //var interact = interactions.Where(s => s.contactID == contactID).FirstOrDefault();
             //var customer = customers.Where(s => s.custID == interact.custID).FirstOrDefault(); //replace e EF context.DbSetName.Where(...)
@@ -103,6 +102,26 @@ namespace SurveyDemo.Controllers
             }
             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
             return View().ToString();
+        }
+
+        public ActionResult AllSent()
+        {
+            IList<InteractView> allSent = null;
+            using (SurveyEntities ctx = new SurveyEntities())
+            {
+                //toBeSent = ctx.Interacts.Where(s => s.uuid == null).ToList<Interact>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
+                allSent = ctx.Interacts.Where(i => i.uuid != null).Select(i => new InteractView()
+                {
+                    Customer = ctx.Customers.Where(c => c.custId == i.Customer_custId).Select(c => c.Name).FirstOrDefault(),
+                    Agent = ctx.Employees.Where(e => e.empId == i.Employee_empId).Select(e => e.Name).FirstOrDefault(),
+                    InteractId = i.interactId,
+                    surveySent = i.uuid == null ? "No" : "Yes",
+                    uuid = i.uuid == null ? "N/A" : i.uuid.ToString()
+                }).ToList<InteractView>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
+
+
+                return View("ToBeSent", allSent);
+            }  
         }
     }
 }

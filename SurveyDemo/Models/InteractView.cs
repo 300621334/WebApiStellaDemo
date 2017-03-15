@@ -12,7 +12,7 @@ namespace SurveyDemo.Models
         public string Agent { get; set; }
         //public string channel { get; set; }
         //public string country { get; set; }
-        public int surveySent { get; set; } //0 or 1
+        public string surveySent { get; set; } //0 or 1
         public string uuid { get; set; }
     }
 }

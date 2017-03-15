@@ -60,12 +60,12 @@ CREATE TABLE [dbo].[Employees] (
     [Email] nvarchar(max)  NOT NULL
 );
 GO
---use [Survey]
+--use [Survey] alter table [dbo].[Interacts] alter column [uuid] nvarchar(max) NULL
 --alter table [dbo].[SurveysIn] alter column  [uuid] nvarchar(max) not NULL
 -- Creating table 'Interacts'
 CREATE TABLE [dbo].[Interacts] (
     [interactId] int IDENTITY(1,1) NOT NULL,
-    [uuid] int  NULL,
+    [uuid] nvarchar(max) NULL,
     [Customer_custId] int  NOT NULL,
     [Employee_empId] int  NOT NULL
 );
@@ -74,10 +74,16 @@ GO
 -- Creating table 'SurveysIn'
 --use [Survey]
 CREATE TABLE [dbo].[SurveysIn] (
-    [uuid] int NOT NULL,
-    [Reward] nvarchar(max)  NOT NULL,
-    [Rating] nvarchar(max)  NOT NULL
+    [surveyId] int identity(1,1) not null,
+	[uuid]   NVARCHAR(MAX)            NOT NULL,
+    [Reward] NVARCHAR (MAX) NOT NULL,
+    [Rating] NVARCHAR (MAX) NOT NULL
 );
+--CREATE TABLE [dbo].[SurveysIn] (
+--    [uuid] int NOT NULL,
+--    [Reward] nvarchar(max)  NOT NULL,
+--    [Rating] nvarchar(max)  NOT NULL
+--);
 GO
 
 -- --------------------------------------------------
@@ -106,7 +112,7 @@ GO
 --use [Survey]
 ALTER TABLE [dbo].[SurveysIn]
 ADD CONSTRAINT [PK_SurveysIn]
-    PRIMARY KEY CLUSTERED ([uuid] ASC);
+    PRIMARY KEY CLUSTERED ([surveyId] ASC);
 GO
 
 -- --------------------------------------------------

@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<SurveyDemo.Models.InteractView>
 
+@*@ViewContext.RouteData.GetRequiredString("action"); --- to get the action that called this view. "controller" to find which ctrlr called this view: http://stackoverflow.com/questions/6398189/getting-current-controller-action-from-within-partial-view*@
+
 @{
     ViewBag.Title = "ToBeSent";
 }
@@ -47,7 +49,11 @@
             @Html.DisplayFor(modelItem => item.uuid)
         </td>
         <td>
-            @Html.ActionLink("Send Survey", "Create", new { contactID = item.InteractId })
+            @if(ViewContext.RouteData.GetRequiredString("action") == "ToBeSent")
+            {
+                @Html.ActionLink("Send Survey", "Create", new { contactID = item.InteractId });
+            }
+            
             @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@

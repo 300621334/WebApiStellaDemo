@@ -14,7 +14,8 @@ namespace SurveyDemo
     
     public partial class SurveysIn
     {
-        public int uuid { get; set; }
+        public int surveyId { get; set; }
+        public string uuid { get; set; }
         public string Reward { get; set; }
         public string Rating { get; set; }
     }

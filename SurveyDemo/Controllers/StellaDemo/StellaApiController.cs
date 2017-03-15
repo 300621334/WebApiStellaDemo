@@ -17,7 +17,7 @@ namespace SurveyDemo.Controllers.StellaDemo
         public IHttpActionResult Post(Customer customer)
         {
             //Guid g;
-            //string g = Guid.NewGuid().ToString().Substring(0, 8);
+            //g = Guid.NewGuid(); //.ToString().Substring(0, 8);
 
             return Ok(customer);
         }

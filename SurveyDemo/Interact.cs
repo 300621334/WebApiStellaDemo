@@ -15,7 +15,7 @@ namespace SurveyDemo
     public partial class Interact
     {
         public int interactId { get; set; }
-        public Nullable<int> uuid { get; set; }
+        public string uuid { get; set; }
         public int Customer_custId { get; set; }
         public int Employee_empId { get; set; }
     }

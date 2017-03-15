@@ -26,15 +26,16 @@
             <PropertyRef Name="interactId" />
           </Key>
           <Property Name="interactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="uuid" Type="int" />
+          <Property Name="uuid" Type="nvarchar(max)" />
           <Property Name="Customer_custId" Type="int" Nullable="false" />
           <Property Name="Employee_empId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SurveysIn">
           <Key>
-            <PropertyRef Name="uuid" />
+            <PropertyRef Name="surveyId" />
           </Key>
-          <Property Name="uuid" Type="int" Nullable="false" />
+          <Property Name="surveyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uuid" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Reward" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Rating" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
@@ -70,15 +71,16 @@
             <PropertyRef Name="interactId" />
           </Key>
           <Property Name="interactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="uuid" Type="Int32" />
+          <Property Name="uuid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Customer_custId" Type="Int32" Nullable="false" />
           <Property Name="Employee_empId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SurveysIn">
           <Key>
-            <PropertyRef Name="uuid" />
+            <PropertyRef Name="surveyId" />
           </Key>
-          <Property Name="uuid" Type="Int32" Nullable="false" />
+          <Property Name="surveyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uuid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Reward" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rating" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
@@ -125,6 +127,7 @@
           <EntitySetMapping Name="SurveysIns">
             <EntityTypeMapping TypeName="SurveyModel.SurveysIn">
               <MappingFragment StoreEntitySet="SurveysIn">
+                <ScalarProperty Name="surveyId" ColumnName="surveyId" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
                 <ScalarProperty Name="Reward" ColumnName="Reward" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
