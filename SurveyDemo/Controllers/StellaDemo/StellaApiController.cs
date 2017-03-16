@@ -23,8 +23,8 @@ namespace SurveyDemo.Controllers.StellaDemo
             List<Object> x = new List<Object>();
             x.Add(new { uuid = g });
             x.Add(customer);
-            string y = JsonConvert.SerializeObject(x);
-            return Ok(y);
+            //string y = JsonConvert.SerializeObject(x);
+            return Ok(x);
         }
 
 

@@ -8,6 +8,5 @@ namespace SurveyDemo.Models
     public class UuidObj
     {
         public string uuid { get; set; }
-        public string value { get; set; }
     }
 }

@@ -92,12 +92,26 @@ namespace SurveyDemo.Controllers
                 if(response.IsSuccessStatusCode)
                 {
                     //var x = response.Content.ReadAsAsync<CustView>();//this does NOT return a string, rather a Task
-                    var x = response.Content.ReadAsAsync<string>();
+                    var x = response.Content.ReadAsAsync<List<Object>>();
                     x.Wait();//wait for TASK to complete
                     //CustView y = x.Result;//Task returns a string
-                    string y = x.Result;
+                    List<Object> y = x.Result;
+
+                    UuidObj uuid = JsonConvert.DeserializeObject<UuidObj>(y.ElementAt(0).ToString());
+                    string z = JsonConvert.SerializeObject(y);//I kept trying to deserial obj e err. Actually obj needs to be SERIAlised NOT other way around!!
+                    //List<Object> list = JsonConvert.DeserializeObject<List<Object>>(y);
+                    //UuidObj uuid = new UuidObj { uuid = list.ElementAt(0).ToString() };
+                    
+                    //string[] z = y.Split(',');
+                    //UuidObj uuid = JsonConvert.DeserializeObject<UuidObj>(z[0]);
+                    
+                    
+                    
+                    
                     //string z = JsonConvert.SerializeObject(y);//can serial a List of multiple objs too //http://www.newtonsoft.com/json/help/html/SerializingCollections.htm
-                    return y;//in real life, save uuid to database here via EF context & DbSet
+                    updateInteractDb(customer.interactId, uuid);
+                    
+                    return z;//in real life, save uuid to database here via EF context & DbSet
 
                     //return RedirectToAction("ToBeSent");//here a POST call made to ToBeSent() shown in browser as "http://localhost:55911" only 
                     //this "return" will exit Create() so remaining code never exe
@@ -106,6 +120,18 @@ namespace SurveyDemo.Controllers
             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
             return View().ToString();
         }
+
+        private void updateInteractDb(int interactId, UuidObj uuid) //http://stackoverflow.com/questions/3642371/how-to-update-only-one-field-using-entity-framework
+        {
+            using(SurveyEntities db = new SurveyEntities())
+            {
+                var interaction = db.Interacts.FirstOrDefault(s=>s.interactId == interactId);
+                interaction.uuid = uuid.uuid;
+                db.SaveChanges();
+            }
+        }
+
+     
 
         public ActionResult AllSent()
         {
