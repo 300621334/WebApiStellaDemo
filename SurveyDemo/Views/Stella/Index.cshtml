@@ -44,12 +44,12 @@
     
     
     @*Read post by "Erik Philips". It did work, but Submit btn was looking different: http://stackoverflow.com/questions/30431073/how-to-hide-query-string-parameter-in-url*@
-    @*Cud alos create hiddev div for WHOLE model : read post by "Jason McGraw": http://stackoverflow.com/questions/15527293/pass-an-entire-model-on-form-submission@@
-         @using (Html.BeginForm("DataReturn", "Stella", FormMethod.Post))
-        {
-            <input type="hidden" name="uuid" value="@Model.uuid" />
-            <input type="hidden" name="reward" value="@Model.reward" />
-            <input type="hidden" name="rating" value="@Model.rating" />
-            <input type="submit" value="Send Feedback To RBC" />
-        }
-    </p>
+    @*Cud alos create hiddev div for WHOLE model : read post by "Jason McGraw": http://stackoverflow.com/questions/15527293/pass-an-entire-model-on-form-submission *@
+     @using (Html.BeginForm("DataReturn", "Stella", FormMethod.Post))
+    {
+        <input type="hidden" name="uuid" value="@Model.uuid" />
+        <input type="hidden" name="reward" value="@Model.reward" />
+        <input type="hidden" name="rating" value="@Model.rating" />
+        <input type="submit" value="Send Feedback To RBC" />
+    }
+</p>
