@@ -13,7 +13,9 @@ namespace SurveyDemo.Controllers.StellaDemo
         // GET: /stella/index
         public ActionResult Index()
         {
-            SurveyReturned feedback = new SurveyReturned { uuid=12345, rating=5, reward="coffee"};
+            //string g = Guid.NewGuid().ToString();
+           
+            SurveyReturned feedback = new SurveyReturned { uuid=1234, rating=5, reward="coffee"};
             return View(feedback);
         }
 

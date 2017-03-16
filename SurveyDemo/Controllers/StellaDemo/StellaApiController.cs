@@ -16,10 +16,15 @@ namespace SurveyDemo.Controllers.StellaDemo
         // POST api/stella
         public IHttpActionResult Post(Customer customer)
         {
-            //Guid g;
-            //g = Guid.NewGuid(); //.ToString().Substring(0, 8);
 
-            return Ok(customer);
+            string g = Guid.NewGuid().ToString(); //.ToString().Substring(0, 8);
+
+
+            List<Object> x = new List<Object>();
+            x.Add(new { uuid = g });
+            x.Add(customer);
+            string y = JsonConvert.SerializeObject(x);
+            return Ok(y);
         }
 
 

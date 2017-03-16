@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="Models\CustView.cs" />
     <Compile Include="Models\EmpView.cs" />
+    <Compile Include="Models\UuidObj.cs" />
     <Compile Include="Models\InteractView.cs" />
     <Compile Include="Models\SendInfo.cs" />
     <Compile Include="Models\SurveyReturned.cs" />

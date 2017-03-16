@@ -68,6 +68,7 @@ namespace SurveyDemo.Controllers
                 int x  = ctx.Interacts.Where(s=>s.interactId==contactID).Select(s=>s.Customer_custId).FirstOrDefault();
                 c= ctx.Customers.Where(s => s.custId == x).Select(s => new CustView
                 {
+                    interactId = contactID,//from param
                     custID = s.custId,
                     name = s.Name,
                     email = s.Email
@@ -90,11 +91,13 @@ namespace SurveyDemo.Controllers
                 var response = postTask.Result;
                 if(response.IsSuccessStatusCode)
                 {
-                    var x = response.Content.ReadAsAsync<CustView>();//this does NOT return a string, rather a Task
+                    //var x = response.Content.ReadAsAsync<CustView>();//this does NOT return a string, rather a Task
+                    var x = response.Content.ReadAsAsync<string>();
                     x.Wait();//wait for TASK to complete
-                    CustView y = x.Result;//Task returns a string
-                    string z = JsonConvert.SerializeObject(y);//can serial a List of multiple objs too //http://www.newtonsoft.com/json/help/html/SerializingCollections.htm
-                    return z;//in real life, save uuid to database here via EF context & DbSet
+                    //CustView y = x.Result;//Task returns a string
+                    string y = x.Result;
+                    //string z = JsonConvert.SerializeObject(y);//can serial a List of multiple objs too //http://www.newtonsoft.com/json/help/html/SerializingCollections.htm
+                    return y;//in real life, save uuid to database here via EF context & DbSet
 
                     //return RedirectToAction("ToBeSent");//here a POST call made to ToBeSent() shown in browser as "http://localhost:55911" only 
                     //this "return" will exit Create() so remaining code never exe
