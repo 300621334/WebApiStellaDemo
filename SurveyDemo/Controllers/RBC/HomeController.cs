@@ -126,7 +126,7 @@ namespace SurveyDemo.Controllers
             using(SurveyEntities db = new SurveyEntities())
             {
                 var interaction = db.Interacts.FirstOrDefault(s=>s.interactId == interactId);
-                interaction.uuid = uuid.uuid;
+                interaction.uuid = uuid.uuid;//state=modified is tracked auto. Don't have to explicitly set the state.
                 db.SaveChanges();
             }
         }

@@ -37,6 +37,19 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Send Feedback To RBC", "DataReturn", new { surveyReturned = Model/*id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    @*sent Model as {sr=Model} but ws getting ALL nulls!!! But following way also has issue that it shows eth in plain view, as queryStr in URL!!! How can I hide this & send in body of request?*@
+    @*Use Form Submit  ..  or use AJAX: Read post by "goodies4uall": Use Ajax instead of Html & ann one more param AjaxOptions--But did seem to work!!! : http://stackoverflow.com/questions/2048778/asp-net-mvc-actionlink-and-post-method*@
+    
+    @*@Html.ActionLink("Send Feedback To RBC", "DataReturn", new SurveyDemo.Models.SurveyReturned { uuid = Model.uuid, reward = Model.reward, rating = Model.rating/*id = Model.PrimaryKey */ }, new AjaxOptions { HttpMethod = "POST" }) |*@
+    
+    
+    @*Read post by "Erik Philips". It did work, but Submit btn was looking different: http://stackoverflow.com/questions/30431073/how-to-hide-query-string-parameter-in-url*@
+    @*Cud alos create hiddev div for WHOLE model : read post by "Jason McGraw": http://stackoverflow.com/questions/15527293/pass-an-entire-model-on-form-submission@@
+         @using (Html.BeginForm("DataReturn", "Stella", FormMethod.Post))
+        {
+            <input type="hidden" name="uuid" value="@Model.uuid" />
+            <input type="hidden" name="reward" value="@Model.reward" />
+            <input type="hidden" name="rating" value="@Model.rating" />
+            <input type="submit" value="Send Feedback To RBC" />
+        }
+    </p>

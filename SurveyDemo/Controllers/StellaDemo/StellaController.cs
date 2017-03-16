@@ -13,12 +13,15 @@ namespace SurveyDemo.Controllers.StellaDemo
         // GET: /stella/index
         public ActionResult Index()
         {
-            //string g = Guid.NewGuid().ToString();
+            string g = Guid.NewGuid().ToString();
+            Random ran = new Random(); int ranInt = ran.Next(1, 6);
+            string[] rewards = {"Low Rating", "Thumbs Up", "Coffee", "Lunch", "Day Off"};
            
-            SurveyReturned feedback = new SurveyReturned { uuid=1234, rating=5, reward="coffee"};
+            SurveyReturned feedback = new SurveyReturned { uuid=g, rating=ranInt.ToString(), reward=rewards[ranInt-1]};
             return View(feedback);
         }
 
+        
         public string DataReturn(SurveyReturned surveyReturned)
         {
             using(var client = new HttpClient())
@@ -33,7 +36,6 @@ namespace SurveyDemo.Controllers.StellaDemo
                     x.Wait();
                     return x.Result;
                 }
-
             }
             return "Data Return to RBC was unsuccessful";
         }
