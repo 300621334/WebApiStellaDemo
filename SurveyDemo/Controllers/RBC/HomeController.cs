@@ -7,6 +7,12 @@ using SurveyDemo.Models;
 using System.Net.Http;//for HttpClient
 using Newtonsoft.Json;//JsonConvert
 
+/*https://msdn.microsoft.com/en-us/library/jj574232(v=vs.113).aspx
+ * Lazy-Loading=when a navigation-prop is called eg. Blogs.Posts, it auto-loads ALL the Post-objs/entities.
+ * Eager-Loading=by using .Include("Posts") or .Include(b=>b.Posts), it loads ALL Posts under a Blog. But we cannot filter Poats, ALL of them will be loaded.
+ * Explicit-Loading=To be able to filter Posts, we need "explicit Loading" eg. can db.Posts.Reference("Blog")/(p=>p.Blogs) if nav-prop Blogs inside Posts ref to just one obj/entity, or if nav-prop refs to a collection(>1 objs) then ctx.Blogs.Collection("Posts")/(b=>b.Posts).Query().Where(p=>p.Tags.Contains("searchWord")).Load() ... to just count rel rows eout loading .Query().Count(); .Query gives us the underlying SQL so we can apply filters to that.
+ To include all objs/entities related to ctx.Object(s), use .Include(). But a related-"navigation"-prop must be there in definition of class for obj we are querying */
+
 namespace SurveyDemo.Controllers
 {
     public class HomeController : Controller
@@ -42,7 +48,7 @@ namespace SurveyDemo.Controllers
             {
                 
                 //toBeSent = ctx.Interacts.Where(s => s.uuid == null).ToList<Interact>(); //"EntityCommandExecutionException" when the underlying storage provider could not execute the specified command
-                toBeSent = ctx.Interacts.Where(i => i.uuid == null).Select(i=> new InteractView()
+                toBeSent = ctx.Interacts.AsNoTracking().Where(i => i.uuid == null).Select(i => new InteractView() //.AsNoTracking() just so the ctx will not track(cache) the entities returned, performance boast for read-only entities. It does that for lifetime of ctx ie. using(){} block
                 {
                 Customer = ctx.Customers.Where(c=>c.custId == i.Customer_custId).Select(c=>c.Name).FirstOrDefault(),
                 Agent = ctx.Employees.Where(e=>e.empId==i.Employee_empId).Select(e=>e.Name).FirstOrDefault(),
